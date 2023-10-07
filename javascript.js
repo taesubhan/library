@@ -45,6 +45,37 @@ function addMultAttr(node, attr) {
     }
 }
 
+function activateSlider(inputNode, book) {
+    inputNode.addEventListener('click', (e) => {
+        book.read = e.target.checked;
+
+        refreshShelf();
+    })
+}
+
+function createSlider(book) {
+    const sliderLabel = document.createElement('label');
+    // const textElem = document.createTextNode('Mark as read');
+    const inputElem = document.createElement('input');
+    const spanElem = document.createElement('span');
+    
+    
+    sliderLabel.classList.add('switch');
+    // sliderLabel.setAttribute('for', 'read-slider')
+    inputElem.setAttribute('type', 'checkbox');
+    // inputElem.setAttribute('id', 'read-slider');
+    spanElem.classList.add('slider');
+    
+    // sliderLabel.appendChild(textElem);
+    sliderLabel.appendChild(inputElem);
+    sliderLabel.appendChild(spanElem);
+
+    inputElem.checked = book.read;
+    activateSlider(inputElem, book);
+
+    return sliderLabel;
+} 
+
 function activateDeleteIcon(deleteNode) {
     deleteNode.addEventListener('click', (e) => {
         const bookCardId = e.target.parentElement.parentElement.id;
@@ -52,7 +83,6 @@ function activateDeleteIcon(deleteNode) {
 
         refreshShelf();
     })
-
 }
 
 function createDeleteButton() {
@@ -94,9 +124,10 @@ function displayBooks() {
         pagesNode.textContent = `${myLibrary[i].pages} pages`;
         isReadNode.textContent = `Status: ${myLibrary[i].read ? 'Completed' : 'Not Completed'}`;
 
+        const readSliderNode = createSlider(myLibrary[i]);
         const deleteNode = createDeleteButton();
 
-        [titleNode, authorNode, pagesNode, isReadNode, deleteNode].forEach((node) => bookNode.appendChild(node));
+        [titleNode, authorNode, pagesNode, isReadNode, readSliderNode, deleteNode].forEach((node) => bookNode.appendChild(node));
         
         libraryNode.appendChild(bookNode);
     }
