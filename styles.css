@@ -1,9 +1,9 @@
 :root {
     font-family: sans-serif, Arial, 'Times New Roman';
-    --header-color: #86efac;
+    --header-color: #0ea5e9;
     --sidebar-color: #16a34a;
     --shelf-color: white;
-    --card-color: rgb(247, 122, 122);
+    --card-color: #fdba74;
 }
 
 html {
@@ -21,7 +21,7 @@ body {
 
 .library {
     display: grid;
-    grid-template-columns: 1fr 5fr 1fr;
+    grid-template-columns: 1fr 5fr;
     grid-template-rows: 200px 1fr;
 
     height: 100vh;
@@ -30,37 +30,41 @@ body {
 /* Header */
 
 .header {
-    grid-column: 1 / 4;
+    grid-column: 1 / 3;
 
     width: 100%;
     height: 100%;
     background-color: var(--header-color);
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
 .header-title {
-    
+    color: white;
+    font-size: 50px;
 }
 
 /* Book Shelf */
 
 .book-shelf {
-    grid-column: 2 / 3;
+    grid-column: 1 / 3;
 
     background-color: var(--shelf-color);
+
+    box-shadow: inset 0px 10px 5px -5px gray;
 }
 
 .book-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-auto-rows: minmax(200px, 1fr);
-    gap: 20px;
+    gap: 25px;
     margin: 0px;
 
-    padding: 20px;
+    padding: 25px;
     text-align: center;
 }
 
@@ -71,25 +75,40 @@ body {
     border: 1px solid black;
     border-radius: 10px;
     
-    padding: 10px;
+    padding: 15px;
+    padding-bottom: 50px;
     background-color: var(--card-color);
+
+    position: relative;
+    overflow-wrap: break-word;
 }
 
 .book-info {
     margin: 5px 0px;
+    font-size: 20px;
 }
 
 .title {
-    font-size: 25px;
+    font-size: 30px;
     font-weight: bold;
     font-style: italic;
     margin-bottom: 25px;
 }
 
+.delete-img {
+    width: 40px;
+    filter: invert(9%) sepia(97%) saturate(4092%) hue-rotate(356deg) brightness(103%) contrast(111%);
+    /* color: #a10000; */
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
 
 /* Side bar */
 
 .side-bar {
     background-color: var(--sidebar-color);
+
+    grid-row: 1 / 3;
 }
 
