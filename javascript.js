@@ -1,4 +1,5 @@
-const myLibrary = []; // Array that holds all the book objects for library
+// Array that holds all the book objects for library
+const myLibrary = []; 
 
 // Button nodes
 const openDialogButton = document.querySelector('.open-dialog');
@@ -9,7 +10,7 @@ const cancelButton = document.querySelector('.cancel-dialog');
 const dialogBox = document.querySelector('.dialog-box');
 const dialogOutput = document.querySelector('.dialog-output');
 const form = document.querySelector('.book-form');
-const userInputs = document.querySelectorAll('.userInput');
+const userInputs = document.querySelectorAll('.user-input');
 
 // Link to trash-can icon, used for delete button
 const trashIconSrc = './icons/delete.svg';
@@ -39,12 +40,14 @@ function createSpanElem(text, ...classDesc) {
     return spanElem;
 }
 
+// Adds multiple attributes into an element through an object
 function addMultAttr(node, attr) {
     for (let key in attr) {
         node.setAttribute(key, attr[key]);
     }
 }
 
+// Inserts slider logic into the slider
 function activateSlider(inputNode, book) {
     inputNode.addEventListener('click', (e) => {
         book.read = e.target.checked;
@@ -53,20 +56,16 @@ function activateSlider(inputNode, book) {
     })
 }
 
+// Creates slider element that will allow users to toggle between read and not-read status
 function createSlider(book) {
     const sliderLabel = document.createElement('label');
-    // const textElem = document.createTextNode('Mark as read');
     const inputElem = document.createElement('input');
-    const spanElem = document.createElement('span');
-    
+    const spanElem = document.createElement('span'); 
     
     sliderLabel.classList.add('switch');
-    // sliderLabel.setAttribute('for', 'read-slider')
     inputElem.setAttribute('type', 'checkbox');
-    // inputElem.setAttribute('id', 'read-slider');
     spanElem.classList.add('slider');
     
-    // sliderLabel.appendChild(textElem);
     sliderLabel.appendChild(inputElem);
     sliderLabel.appendChild(spanElem);
 
@@ -76,6 +75,7 @@ function createSlider(book) {
     return sliderLabel;
 } 
 
+// Inserts the logic for the delete button
 function activateDeleteIcon(deleteNode) {
     deleteNode.addEventListener('click', (e) => {
         const bookCardId = e.target.parentElement.parentElement.id;
@@ -85,6 +85,7 @@ function activateDeleteIcon(deleteNode) {
     })
 }
 
+// Creates and adds a delete button element for each book card
 function createDeleteButton() {
     const deleteNode = document.createElement('a');
     const imageNode = document.createElement('img');
@@ -118,6 +119,8 @@ function displayBooks() {
         pagesNode.classList.add('pages', 'book-info');
         const isReadNode = document.createElement('p');
         isReadNode.classList.add('read', 'book-info');
+        const bookDescNode = document.createElement('div');
+        bookDescNode.classList.add('book-description');
 
         titleNode.textContent = `${myLibrary[i].title}`;
         authorNode.textContent = `${myLibrary[i].author}`;
@@ -127,7 +130,8 @@ function displayBooks() {
         const readSliderNode = createSlider(myLibrary[i]);
         const deleteNode = createDeleteButton();
 
-        [titleNode, authorNode, pagesNode, isReadNode, readSliderNode, deleteNode].forEach((node) => bookNode.appendChild(node));
+        [authorNode, pagesNode, isReadNode, readSliderNode].forEach((node) => bookDescNode.appendChild(node));
+        [titleNode, bookDescNode, deleteNode].forEach((node) => bookNode.appendChild(node));
         
         libraryNode.appendChild(bookNode);
     }
@@ -187,20 +191,25 @@ function activateDialog() {
 
 // Creates some dummy book values to populate the library
 function addDummyBooks() {
-const bookA = new Book('The Title A', 'James Willis', 189, true);
-const bookB = new Book('The Tale of Tales', 'Susan Jacobson',  312, true);
-const bookC = new Book('My Horrible Apple', 'Alex Blade',  223, false);
-const bookD = new Book('Worm\'s Favorite Book', 'Trent Bookworm',  115, false);
-const bookE = new Book('Why Apple\'s Rock!', 'Jessica Applework',  332, true);
+    const bookA = new Book('A Book Title', 'Author A', 189, true);
+    const bookB = new Book('A Tale of Two Tails', 'Charlie Snickers',  312, true);
+    const bookC = new Book('Another Book Title', 'John Smith',  223, false);
+    const bookD = new Book('Will You Still Love Me As A Worm?', 'Trent Bookworm',  115, false);
+    const bookE = new Book('Why Apple\'s Rock!', 'Justine Apples',  332, true);
 
-addBookToLibrary(bookA);
-addBookToLibrary(bookB);
-addBookToLibrary(bookC);
-addBookToLibrary(bookD);
-addBookToLibrary(bookE);
+    addBookToLibrary(bookA);
+    addBookToLibrary(bookB);
+    addBookToLibrary(bookC);
+    addBookToLibrary(bookD);
+    addBookToLibrary(bookE);
 
-displayBooks();
+    displayBooks();
 }
 
-addDummyBooks();
-activateDialog();
+// Runs all the functions that makes the library website work
+function startLibrary() {
+    addDummyBooks();
+    activateDialog();
+}
+
+startLibrary();

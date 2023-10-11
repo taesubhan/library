@@ -5,6 +5,7 @@
         <script src="javascript.js" defer></script>
         <link rel="stylesheet" href="styles.css">
         <title>My Library</title>
+        <link rel="tab icon" href="icons/library.svg">
     </head>
 
     <body>
@@ -13,28 +14,31 @@
                 <h1 class="header-title">My Library</h1>
                 <div>
                     <dialog class="dialog-box">
-                        <form action="" class="book-form">
-                            <div>
-                                <label for="title">Title: </label>
-                                <input type="text" name="book_title" id="title" class="userInput" required>
-                            </div>
-                            <div>
-                                <label for="author">Author: </label>
-                                <input type="text" name="book_author" id="author" class="userInput" required>
-                            </div>
-                            <div>
-                                <label for="pages">Number of pages: </label>
-                                <input type="number" name="book_pages" id="pages" class="userInput" required>
-                            </div>
-                            <div>
-                                <label for="read">Completed? </label>
-                                <input type="checkbox" name="read" id="read" value='true' class="userInput">
-                            </div>
-                            <div>
-                                <button class="submit-dialog">Submit</button>
-                                <button formmethod="dialog" class="cancel-dialog">Cancel</button>
-                            </div>
-                        </form>
+                        <div class="form-container">
+                            <h1 class="form-title">Add New Book</h1>
+                            <form action="" class="book-form">
+                                <div class="form-input">
+                                    <label for="title">Title: </label>
+                                    <input type="text" name="book_title" id="title" class="user-input" maxlength="50" required>
+                                </div>
+                                <div class="form-input">
+                                    <label for="author">Author: </label>
+                                    <input type="text" name="book_author" id="author" class="user-input" required>
+                                </div>
+                                <div class="form-input">
+                                    <label for="pages"># of pages: </label>
+                                    <input type="number" name="book_pages" id="pages" class="user-input" required>
+                                </div>
+                                <div class="form-input">
+                                    <label for="read">Completed? </label>
+                                    <input type="checkbox" name="read" id="read" value='true' class="user-input">
+                                </div>
+                                <div class="form-actions">
+                                    <button class="submit-dialog form-buttons">Submit</button>
+                                    <button formmethod="dialog" class="cancel-dialog form-buttons">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
                     </dialog>
                     <div>
                         <button class="open-dialog">Add Book</button>
