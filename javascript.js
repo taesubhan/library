@@ -1,7 +1,37 @@
+// Library class that stores all the book objects
+class Library {
+    static myLibrary = [];
 
+    static addBook(book) {
+        this.myLibrary.push(book);
+    }
 
-// Array that holds all the book objects for library
-const myLibrary = []; 
+    static removeBookByIndex(bookIndex) {
+        this.myLibrary.splice(bookIndex,1);
+    }
+
+    static getTotalBookCount() {
+        return this.myLibrary.length;
+    }
+
+    static getBookByIndex(index) {
+        return this.myLibrary[index];
+    }
+}
+
+// Book class where each instance represents an unique book
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
+
+    info() {
+        return `"${this.title}" by ${this.author} contains ${this.pages} pages and was ${this.read ? 'completed' : 'not read'}`;
+    }
+}
 
 // Button nodes
 const openDialogButton = document.querySelector('.open-dialog');
@@ -16,23 +46,6 @@ const userInputs = document.querySelectorAll('.user-input');
 
 // Link to trash-can icon, used for delete button
 const trashIconSrc = './icons/delete.svg';
-
-// Book prototype
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-
-    this.info = function() {
-        return `"${title}" by ${author} contains ${pages} pages and was ${read ? 'completed' : 'not read'}`
-    }
-}
-
-// Add Book object into library array
-function addBookToLibrary(book) {
-    myLibrary.push(book);
-}
 
 // Create Span Element for text manipulation through CSS
 function createSpanElem(text, ...classDesc) {
@@ -81,7 +94,7 @@ function createSlider(book) {
 function activateDeleteIcon(deleteNode) {
     deleteNode.addEventListener('click', (e) => {
         const bookCardId = e.target.parentElement.parentElement.id;
-        myLibrary.splice(bookCardId,1);
+        Library.removeBookByIndex(bookCardId);
 
         refreshShelf();
     })
@@ -109,7 +122,7 @@ function createDeleteButton() {
 function displayBooks() {
     const libraryNode = document.querySelector('.book-list');
 
-    for (let i = 0; i < myLibrary.length; i++) {
+    for (let i = 0; i < Library.getTotalBookCount(); i++) {
         const bookNode = document.createElement('li');
         bookNode.classList.add('book');
         bookNode.setAttribute('id', `${i}`);
@@ -124,12 +137,12 @@ function displayBooks() {
         const bookDescNode = document.createElement('div');
         bookDescNode.classList.add('book-description');
 
-        titleNode.textContent = `${myLibrary[i].title}`;
-        authorNode.textContent = `${myLibrary[i].author}`;
-        pagesNode.textContent = `${myLibrary[i].pages} pages`;
-        isReadNode.textContent = `Status: ${myLibrary[i].read ? 'Completed' : 'Not Completed'}`;
+        titleNode.textContent = `${Library.getBookByIndex(i).title}`;
+        authorNode.textContent = `${Library.getBookByIndex(i).author}`;
+        pagesNode.textContent = `${Library.getBookByIndex(i).pages} pages`;
+        isReadNode.textContent = `Status: ${Library.getBookByIndex(i).read ? 'Completed' : 'Not Completed'}`;
 
-        const readSliderNode = createSlider(myLibrary[i]);
+        const readSliderNode = createSlider(Library.getBookByIndex(i));
         const deleteNode = createDeleteButton();
 
         [authorNode, pagesNode, isReadNode, readSliderNode].forEach((node) => bookDescNode.appendChild(node));
@@ -162,7 +175,7 @@ function createAndAddBook() {
             : input.value
     });
     const myBook = new Book(inputResponses[0], inputResponses[1], inputResponses[2], inputResponses[3]);
-    addBookToLibrary(myBook);
+    Library.addBook(myBook);
 
     refreshShelf();
 }
@@ -199,11 +212,11 @@ function addDummyBooks() {
     const bookD = new Book('Will You Still Love Me As A Worm?', 'Trent Bookworm',  115, false);
     const bookE = new Book('Why Apple\'s Rock!', 'Justine Apples',  332, true);
 
-    addBookToLibrary(bookA);
-    addBookToLibrary(bookB);
-    addBookToLibrary(bookC);
-    addBookToLibrary(bookD);
-    addBookToLibrary(bookE);
+    Library.addBook(bookA);
+    Library.addBook(bookB);
+    Library.addBook(bookC);
+    Library.addBook(bookD);
+    Library.addBook(bookE);
 
     displayBooks();
 }
