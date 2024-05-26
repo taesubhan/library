@@ -190,6 +190,7 @@ function activateDialog() {
 
     submitButton.addEventListener('click', (e) => {
         if (!form.reportValidity()) {
+            showAllError();
             return;
         }
 
@@ -202,6 +203,38 @@ function activateDialog() {
         e.preventDefault();
         dialogBox.close();
     })
+}
+
+// Generates validation messages if user doesn't input valid data in the dialog form
+function addValidationMessage() {
+    const inputs = document.querySelectorAll('.input-with-validation');
+
+    for (const input of inputs) {
+        input.addEventListener('input', () => {
+            if (!input.validity.valid) {
+                showError(input);
+            }
+        })
+    }
+}
+
+function showError(elem) {
+    if (elem.validity.valueMissing) {
+        elem.setCustomValidity('This field is required');
+    } else if (elem.validity.rangeUnderflow) {
+        elem.setCustomValidity('The value needs to be greater than 0');
+    } else if (elem.validity.rangeOverflow) {
+        elem.setCustomValidity('The value needs to be less than 9999');
+    } else {
+        elem.setCustomValidity('');
+    }
+
+    elem.reportValidity();
+}
+
+function showAllError() {
+    const inputs = document.querySelectorAll('.input-with-validation');
+    inputs.forEach((input) => showError(input));
 }
 
 // Creates some dummy book values to populate the library
@@ -225,6 +258,7 @@ function addDummyBooks() {
 function startLibrary() {
     addDummyBooks();
     activateDialog();
+    addValidationMessage();
 }
 
 startLibrary();

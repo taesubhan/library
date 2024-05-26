@@ -181,6 +181,10 @@ input:checked + .slider:before {
 
 /* Dialog Box */
 
+.required-input {
+    color: red;
+}
+
 .form-container {
     height: 100%;
     display: flex;
